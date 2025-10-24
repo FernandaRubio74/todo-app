@@ -10,6 +10,7 @@ export class AuthService {
         private jwtService: JwtService,
     ) { }
 
+    //validacion del user
     async validateUser(email: string, pass: string): Promise<any> {
         const user = await this.usersService.findAll().then(users => users.find(user => user.email === email));
 
@@ -25,6 +26,7 @@ export class AuthService {
         return user;
     }
 
+    //generacion del jwt token al hacer login
     async login(user: any) {
         const payload = { email: user.email, sub: user.id };
 

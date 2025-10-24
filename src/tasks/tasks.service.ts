@@ -70,7 +70,7 @@ export class TasksService {
 
         if (data.title !== undefined) task.title = data.title;
         if (data.description !== undefined) task.description = data.description;
-        if (data.isCompleted !== undefined) task.completed = data.isCompleted;
+        if (data.isCompleted !== undefined) task.isCompleted = data.isCompleted;
 
         return this.taskRepository.save(task);
     }

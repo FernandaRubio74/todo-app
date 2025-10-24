@@ -11,14 +11,14 @@ export class AuthService {
     ) { }
 
     //validacion del user
-    async validateUser(email: string, pass: string): Promise<any> {
+    async validateUser(email: string, password: string): Promise<any> {
         const user = await this.usersService.findAll().then(users => users.find(user => user.email === email));
 
         if (!user) {
             return null;
         }
 
-        const isPasswordValid = await bcrypt.compare(pass, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return null;
         }
@@ -28,9 +28,9 @@ export class AuthService {
 
     //generacion del jwt token al hacer login
     async login(user: any) {
-        const payload = { email: user.email, sub: user.id };
+        const payload = { email: user.email, sub: user.id, name: user.name };
 
-        const {pass, ...userWithoutPassword} = user;
+        const {password, ...userWithoutPassword} = user;
 
         return {
             access_token: this.jwtService.sign(payload),

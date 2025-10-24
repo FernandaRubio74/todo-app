@@ -1,21 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './user.entity/user.entity';
+import { JwtAuthGuard } from 'src/auth/jwtAuth.guard';
 
+//este controlador maneja las rutas relacionadas con los usuarios, no se usan para la app básica, 
+// pero para conocer a nivel de backend cómo se manejan los usuarios y la base de datos
 @Controller('users')
 export class UsersController {
     constructor(
         private readonly usersService: UsersService,
     ) {}
-
-    @Post()
-    @ApiOperation({ summary: 'Create a new user' })
-    @ApiResponse({ status: 201, description: 'The user has been successfully created.' })
-    createUser(@Body() body: CreateUserDto) {
-        return this.usersService.createUser(body);
-    }
 
     @Get()
     @ApiOperation({ summary: 'Get all users' })

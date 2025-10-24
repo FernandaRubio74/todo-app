@@ -11,15 +11,18 @@ export class UsersService {
         private usersRepository: Repository<User>,
     ) { }
 
+    // Método para crear un nuevo usuario
     createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
         const user = this.usersRepository.create({ ...createUserDto });
         return this.usersRepository.save(user);
     }
 
+    //obtener todos los usuarios
     async findAll(): Promise<User[]> {
         return this.usersRepository.find();
     }
 
+    //encontrar un usuario por su ID
     async findOne(id: number): Promise<User> {
         const user = await this.usersRepository.findOneBy({ id });
         if (!user) {
@@ -28,12 +31,14 @@ export class UsersService {
         return user;
     }
 
+    //actualizar un usuario
     async updateUser(id: number, data: Partial<User>): Promise<User> {
         const user = await this.findOne(id);
         Object.assign(user, data);
         return this.usersRepository.save(user);
     }
 
+    //borrar un usuario (id)
     async deleteUser(id: number): Promise<void> {
         const result = await this.usersRepository.delete(id);
         if (result.affected === 0) {
